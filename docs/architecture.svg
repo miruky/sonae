@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" role="img" aria-labelledby="arch-title">
+  <title id="arch-title">sonaeの構成図。UI層がロジック層の4モジュール(stock・expiry・target・restock)を呼び、台帳はlocalStorageに保存される。</title>
+  <style>
+    .box { fill: #fdfcfa; stroke: #e0dfd6; stroke-width: 1.5; }
+    .layer { fill: #f5f4f0; stroke: #e0dfd6; stroke-width: 1.5; }
+    .chip { fill: #e2efe5; stroke: none; }
+    .name { fill: #262823; font: 600 15px system-ui, sans-serif; }
+    .label { fill: #6b6f64; font: 13px system-ui, sans-serif; }
+    .chip-text { fill: #2e6b46; font: 600 13px system-ui, sans-serif; }
+    .layer-name { fill: #2e6b46; font: 700 13px system-ui, sans-serif; letter-spacing: 0.08em; }
+    .edge { stroke: #6b6f64; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .edge-label { fill: #6b6f64; font: 12px system-ui, sans-serif; }
+    #arrow path { fill: #6b6f64; }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #21221d; stroke: #353629; }
+      .layer { fill: #181815; stroke: #353629; }
+      .chip { fill: #233b2c; }
+      .name { fill: #e8e9e1; }
+      .label { fill: #9da293; }
+      .chip-text { fill: #7cc296; }
+      .layer-name { fill: #7cc296; }
+      .edge { stroke: #9da293; }
+      .edge-label { fill: #9da293; }
+      #arrow path { fill: #9da293; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z"/>
+    </marker>
+  </defs>
+
+  <rect class="layer" x="40" y="32" width="800" height="128" rx="14"/>
+  <text class="layer-name" x="64" y="60">UI層(app.ts / main.ts)</text>
+  <text class="label" x="64" y="82">1画面の台帳。変更はchangeイベントで確定し、品目は常に急ぐ順で描き直す</text>
+  <rect class="chip" x="64" y="100" width="130" height="32" rx="16"/>
+  <text class="chip-text" x="129" y="121" text-anchor="middle">備蓄目標と充足</text>
+  <rect class="chip" x="206" y="100" width="130" height="32" rx="16"/>
+  <text class="chip-text" x="271" y="121" text-anchor="middle">品目の台帳</text>
+  <rect class="chip" x="348" y="100" width="150" height="32" rx="16"/>
+  <text class="chip-text" x="423" y="121" text-anchor="middle">買い足しリスト</text>
+
+  <path class="edge" d="M150 160 V224"/>
+  <path class="edge" d="M345 160 V224"/>
+  <path class="edge" d="M540 160 V224"/>
+  <path class="edge" d="M730 160 V224"/>
+
+  <rect class="box" x="60" y="228" width="180" height="96" rx="14"/>
+  <text class="name" x="150" y="262" text-anchor="middle">stock.ts</text>
+  <text class="label" x="150" y="286" text-anchor="middle">品目と世帯設定の型・</text>
+  <text class="label" x="150" y="306" text-anchor="middle">検証・永続化</text>
+
+  <rect class="box" x="255" y="228" width="180" height="96" rx="14"/>
+  <text class="name" x="345" y="262" text-anchor="middle">expiry.ts</text>
+  <text class="label" x="345" y="286" text-anchor="middle">期限・点検時期の判定と</text>
+  <text class="label" x="345" y="306" text-anchor="middle">急ぐ順の並べ替え</text>
+
+  <rect class="box" x="450" y="228" width="180" height="96" rx="14"/>
+  <text class="name" x="540" y="262" text-anchor="middle">target.ts</text>
+  <text class="label" x="540" y="286" text-anchor="middle">人数×日数から目標量を</text>
+  <text class="label" x="540" y="306" text-anchor="middle">計算し充足率を出す</text>
+
+  <rect class="box" x="645" y="228" width="180" height="96" rx="14"/>
+  <text class="name" x="735" y="262" text-anchor="middle">restock.ts</text>
+  <text class="label" x="735" y="286" text-anchor="middle">要対応と不足分を</text>
+  <text class="label" x="735" y="306" text-anchor="middle">Markdownにまとめる</text>
+
+  <path class="edge" d="M150 324 V388"/>
+  <text class="edge-label" x="162" y="362">保存・復元</text>
+
+  <rect class="box" x="60" y="392" width="180" height="48" rx="14"/>
+  <text class="name" x="150" y="421" text-anchor="middle">localStorage</text>
+</svg>
