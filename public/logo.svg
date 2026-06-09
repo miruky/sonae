@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="logo-title">
+  <title id="logo-title">sonae - 備蓄箱と水滴のロゴ</title>
+  <style>
+    .bg { fill: #f5f4f0; }
+    .ink { stroke: #262823; }
+    .accent { stroke: #2e6b46; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #181815; }
+      .ink { stroke: #e8e9e1; }
+      .accent { stroke: #7cc296; }
+    }
+  </style>
+  <rect class="bg" width="128" height="128" rx="28"/>
+  <g fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path class="ink" d="M22 56 64 38l42 18v34l-42 18-42-18z"/>
+    <path class="ink" d="M22 56l42 18 42-18"/>
+    <path class="ink" d="M64 74v34"/>
+    <path class="accent" d="M64 10c-6 7.5-9 11.5-9 16a9 9 0 0 0 18 0c0-4.5-3-8.5-9-16z"/>
+  </g>
+</svg>
