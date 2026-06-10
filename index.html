@@ -7,10 +7,20 @@
       name="description"
       content="防災備蓄の台帳。賞味期限と点検時期を見張り、家庭の備蓄目標との差を買い足しリストにする"
     />
-    <meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#181815" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f3f1ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#15160f" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="preconnect" href="https://picsum.photos" />
+    <link rel="preconnect" href="https://fastly.picsum.photos" />
     <title>sonae | 防災備蓄の台帳</title>
+    <script>
+      // 描画前に保存済みテーマを適用してFOUCを防ぐ。自動のときは属性を付けず、
+      // CSSのprefers-color-schemeに委ねる。
+      try {
+        var t = localStorage.getItem('sonae.theme.v1');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="app"></div>
