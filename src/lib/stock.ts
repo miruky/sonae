@@ -103,7 +103,18 @@ export function deserializeData(json: string): SonaeData | null {
 }
 
 export function serializeData(data: SonaeData): string {
-  return JSON.stringify(data);
+  return JSON.stringify(data, null, 2);
+}
+
+/**
+ * 取り込んだデータを現在の台帳に統合する。品目はidで突き合わせ、
+ * 同じidは取り込み側で上書きする。これで別端末の書き出しを読み込んでも
+ * 手元の品目を失わない。世帯設定は取り込み側を採用する。
+ */
+export function mergeData(current: SonaeData, incoming: SonaeData): SonaeData {
+  const byId = new Map(current.items.map((item) => [item.id, item]));
+  for (const item of incoming.items) byId.set(item.id, item);
+  return { household: incoming.household, items: [...byId.values()] };
 }
 
 export interface SonaeStore {
