@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { seedData } from './seed';
-import { createStore, deserializeData, emptyData, serializeData } from './stock';
+import { createStore, deserializeData, emptyData, mergeData, serializeData } from './stock';
+import type { SonaeData, StockItem } from './stock';
 
 describe('deserializeData', () => {
   it('seedDataと往復できる', () => {
@@ -56,5 +57,53 @@ describe('createStore', () => {
     const data = seedData(Date.UTC(2026, 5, 13));
     store.save(data);
     expect(store.load()).toEqual(data);
+  });
+});
+
+describe('mergeData', () => {
+  const water: StockItem = {
+    id: 'a',
+    name: '水',
+    category: 'water',
+    quantity: 12,
+    unit: 'L',
+    expiry: '',
+    checkedAt: '2026-06-01',
+  };
+  const can: StockItem = {
+    id: 'b',
+    name: '缶詰',
+    category: 'food',
+    quantity: 6,
+    unit: '食',
+    expiry: '',
+    checkedAt: '2026-06-01',
+  };
+  const base: SonaeData = { household: { people: 2, days: 3 }, items: [water, can] };
+
+  it('同じidは取り込み側で上書きする', () => {
+    const incoming: SonaeData = {
+      household: { people: 4, days: 7 },
+      items: [{ ...water, quantity: 24 }],
+    };
+    const merged = mergeData(base, incoming);
+    expect(merged.household).toEqual({ people: 4, days: 7 });
+    expect(merged.items.find((i) => i.id === 'a')?.quantity).toBe(24);
+    expect(merged.items).toHaveLength(2);
+  });
+
+  it('新しいidは追加し、手元の品目は残す', () => {
+    const battery: StockItem = {
+      id: 'c',
+      name: '電池',
+      category: 'power',
+      quantity: 8,
+      unit: '本',
+      expiry: '',
+      checkedAt: '2026-06-01',
+    };
+    const incoming: SonaeData = { household: base.household, items: [battery] };
+    const merged = mergeData(base, incoming);
+    expect(merged.items.map((i) => i.id).sort()).toEqual(['a', 'b', 'c']);
   });
 });
